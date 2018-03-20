@@ -40,13 +40,9 @@ database.ref().on("child_added", function(snap) {
     var firstTrain = snap.val().firstTrain;
     var frequency = snap.val().frequency;
 
-    var firstTrainConv = moment(firstTrain, "hh:mm");
+    var firstTrainConv = moment(firstTrain, "HH:mm").subtract(1, "years");
 
-    console.log(moment(firstTrainConv, "minutes"));
-
-    var difference = moment().diff(moment(firstTrainConv, "minutes"));
-
-    console.log(difference);
+    var difference = moment().diff(firstTrainConv, "minutes");
 
     var remainder = difference % frequency;
 
@@ -58,7 +54,7 @@ database.ref().on("child_added", function(snap) {
     var tableName = $("<td>").text(trainName);
     var tableDes = $("<td>").text(destination);
     var tableFrequency = $("<td>").text(frequency);
-    var tableNext = $("<td>").text(moment(nextTrain).format("hh:mm"));
+    var tableNext = $("<td>").text(moment(nextTrain).format("HH:mm"));
     var tableMin = $("<td>").text(minutesTilNext);
 
     newRow.append(tableName).append(tableDes).append(tableFrequency).append(tableNext).append(tableMin);
